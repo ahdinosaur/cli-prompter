@@ -28,12 +28,12 @@ function getPrompter ({ type }) {
   return promptTypes[type]
 }
 
-function pullAyncScan (value, accumulator) {		
+function pullAyncScan (value, accumulator) {
   return pullAsyncMap((next, cb) => {
     accumulator(value, next, (err, nextValue) => {
       if (err) return cb(err)
       value = nextValue
-      cb(null, value)
+      cb(null, value[Object.keys(value)[0]])
     })
-  })		
+  })
 }

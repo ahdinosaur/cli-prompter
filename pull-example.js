@@ -33,7 +33,7 @@ var answer = app.answer = notify()
 // listen for answers, these area state updates
 pull(
   answer.listen(),
-  model.store,
+  app.store,
   // see new
   pull.through(console.log),
   // handle end when applications ends:
@@ -51,12 +51,12 @@ const QUESTION = {
   default: 'north'
 }
 
-// ask the question, push the answer message, repeat.
+// listen for questions to prompt, get answer to update state, then repeat
 pull(
-  questions.listen(),
+  ask.listen(),
   prompter(),
-  pull.drain(answer => {
-    answer(model.msg.move(answer))
+  pull.drain(direction => {
+    answer(app.msg.move(direction))
     ask(QUESTION)
   })
 )

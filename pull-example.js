@@ -26,13 +26,13 @@ navigator.update = {
 }
 
 // application
-var questions = notify()
-var answers = notify()
-var model = component(navigator)
+var app = component(navigator)
+var ask = app.ask = notify()
+var answer = app.answer = notify()
 
-// take answers (where you want to go) and update model (the direction)
+// listen for answers, these area state updates
 pull(
-  answers.listen(),
+  answer.listen(),
   model.store,
   // see new
   pull.through(console.log),
@@ -44,24 +44,22 @@ pull(
   })
 )
 
-function ask () {
-  questions({
-    type: 'text',
-    name: 'direction',
-    message: 'Which direction do you want to go?',
-    default: 'north'
-  })
+const QUESTION = {
+  type: 'text',
+  name: 'direction',
+  message: 'Which direction do you want to go?',
+  default: 'north'
 }
 
-// a loop that asks question, updates state, repeat
+// ask the question, push the answer message, repeat.
 pull(
   questions.listen(),
   prompter(),
   pull.drain(answer => {
-    answers(model.msg.move(answer))
-    ask()
+    answer(model.msg.move(answer))
+    ask(QUESTION)
   })
 )
 
 // start
-ask()
+ask(QUESTION)

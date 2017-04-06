@@ -27,7 +27,7 @@ navigator.update = {
 
 // application
 var app = component(navigator)
-var ask = app.ask = notify()
+var question = app.ask = notify()
 var answer = app.answer = notify()
 
 // listen for answers, these area state updates
@@ -44,22 +44,24 @@ pull(
   })
 )
 
-const QUESTION = {
-  type: 'text',
-  name: 'direction',
-  message: 'Which direction do you want to go?',
-  default: 'north'
+function ask (direction) {
+  question({
+    type: 'text',
+    name: 'direction',
+    message: 'Which direction do you want to go?',
+    default: direction || 'north'
+  })
 }
 
 // listen for questions to prompt, get answer to update state, then repeat
 pull(
-  ask.listen(),
+  question.listen(),
   prompter(),
   pull.drain(direction => {
     answer(app.msg.move(direction))
-    ask(QUESTION)
+    ask(direction)
   })
 )
 
 // start
-ask(QUESTION)
+ask()

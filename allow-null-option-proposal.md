@@ -2,7 +2,7 @@
 Currently, the cli prompter will not accept a null string as the entered
 value, but will instead simply repeat the prompt.
 
-This proposal would add an option, *allowNull* to each question object
+This proposal would add an option, **allowNull** to each question object
 passed into a prompt.  
 
 If allowNull === true, cli prompter for that question
@@ -32,7 +32,7 @@ Otherwise, null strings will not be accepted.
             name: 'name',
             message: "App Name? ",
         },
-
+        // and this also will NOT accept a null string
         { 
             type: 'text',
             name: 'name',

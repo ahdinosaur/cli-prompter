@@ -14,7 +14,6 @@ function cliPrompter (questions, cb) {
 function promptQuestion (question) {
   const { type } = question
   const Prompter = promptTypes[type]
-
   return (values, cb) => {
     Prompter({ question, values }, cb)
   }

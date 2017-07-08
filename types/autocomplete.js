@@ -5,12 +5,12 @@ const assign = require('../lib/assign')
 const normalizeOptions = require('../lib/normalizeOptions')
 
 module.exports = function AutoComplete ({ question, values }, cb) {
-  const { name, message, default: dft, suggest } = question
+  const { name, message, default: dft, suggest, allowNull } = question
   const display = `${message} (${dft})`
   const suggester = Suggester({ suggest, values })
   return autocompletePrompt(display, suggester)
     .once('submit', value => {
-      if (value === '') {
+      if (value === '' && allowNull !== true) {
         if (dft) value = dft
         else return AutoComplete({ question, values }, cb) // retry
       }

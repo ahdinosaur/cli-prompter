@@ -6,7 +6,7 @@ const normalizeOptions = require('../lib/normalizeOptions')
 
 module.exports = function AutoComplete ({ question, values }, cb) {
   const { name, message, default: dft, suggest } = question
-  const display = `${message} (${dft})`
+  const display = `${message}${dft ? ` (${dft})` : ''})`
   const suggester = Suggester({ suggest, values })
   return autocompletePrompt(display, suggester)
     .once('submit', value => {

@@ -1,6 +1,6 @@
 {
   "name": "cli-prompter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "interactive user prompts for the command-line interface",
   "main": "index.js",
   "scripts": {
